@@ -5,8 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-@Entity
-public class destinies {
+public class Destiny {
     private String nombre;
     private String descripcion;
     private String imagen;
@@ -14,12 +13,11 @@ public class destinies {
     private String tipo;
     private String fecha;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    //@Id
+    //@GeneratedValue
+    //private Long id;
 
-    public void Destinty(Long id, String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha) {
-        this.id = id;
+    public Destiny(String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -27,8 +25,6 @@ public class destinies {
         this.tipo = tipo;
         this.fecha = fecha;
     }
-
-    public void Destiny() {}
 
     public String getNombre() {
         return nombre;
