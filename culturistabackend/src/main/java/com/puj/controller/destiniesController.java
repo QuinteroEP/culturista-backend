@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.puj.entity.Destiny;
 import com.puj.service.destinyService;
 
 @Controller
@@ -20,13 +19,13 @@ public class destiniesController {
     @GetMapping("/all")
     @ResponseBody
     public String getAllDestinos(Model model) {
-        model.addAttribute("destinos", destino.findAll());
+        model.addAttribute("destinos", destino.findAllDestinies());
         return "Todos los destinos";
     }
     
     @GetMapping("/informacion/{id}")
     @ResponseBody
-    public String getDestino(Model model, @PathVariable("id") int id) {
+    public String getDestino(Model model, @PathVariable("id") Long id) {
         model.addAttribute("informacion", destino.findById(id));
         return "Información del destino";
     }

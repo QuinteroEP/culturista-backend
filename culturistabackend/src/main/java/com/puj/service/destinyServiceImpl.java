@@ -1,22 +1,25 @@
 package com.puj.service;
 
-import java.util.*;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.puj.entity.Destiny;
 import com.puj.repository.destinyRepository;
 
+@Service
 public class destinyServiceImpl implements destinyService {
     @Autowired
     destinyRepository repo;
 
-
-    public Destiny findById(int id) {
-        return repo.findById(id);
+    @Override
+    public Destiny findById(Long id) {
+        return repo.findById(id).get();
     }
 
-    public Collection<Destiny> findAll() {
+    @Override
+    public Collection<Destiny> findAllDestinies() {
         return repo.findAll();
     }
     
