@@ -1,11 +1,11 @@
 package com.puj.service;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.puj.entity.Destiny;
 
 public interface destinyService {
 
     public Destiny findById(Long id);
-    public Collection<Destiny> findAllDestinies();
+    public List<Destiny> findAllDestinies();
 }

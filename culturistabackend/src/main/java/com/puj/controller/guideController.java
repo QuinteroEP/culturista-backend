@@ -13,35 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.puj.entity.Destiny;
-import com.puj.service.destinyService;
+import com.puj.service.guideService;
+import com.puj.entity.Guide;
 
 @RestController
-@RequestMapping("/destino")
+@RequestMapping("/guias")
 @CrossOrigin(origins = "http://localhost:4200")
-public class destiniesController {
+public class guideController {
     @Autowired
-    destinyService destinyService;
+    guideService guiaService;
 
-    //Todos los destinos
-    //localhost:8080/destino/all
-     @GetMapping("/all")
+    //Todos los guias
+    //localhost:8080/guias/all
+    @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<List<Destiny>> getAllDestinies(Model model) {
-        List<Destiny> lista = destinyService.findAllDestinies();
+    public ResponseEntity<List<Guide>> getAllGuides(Model model) {
+        List<Guide> lista = guiaService.findAllGuides();
 
-        ResponseEntity<List<Destiny>> response = new ResponseEntity<>(lista, HttpStatus.OK);
+        ResponseEntity<List<Guide>> response = new ResponseEntity<>(lista, HttpStatus.OK);
         return response;
     }
 
-    //Buscar un destino
-    //localhost:8080/destino/informacion/1
+    //Buscar un guia
+    //localhost:8080/guias/informacion/1
     @GetMapping("/informacion/{id}")
     @ResponseBody
-    public ResponseEntity<Destiny> getGuia(Model model, @PathVariable("id") Long id) {
-        Destiny destino = destinyService.findById(id);
+    public ResponseEntity<Guide> getGuia(Model model, @PathVariable("id") Long id) {
+        Guide guia = guiaService.findById(id);
 
-        return new ResponseEntity<>(destino, HttpStatus.OK);
+        return new ResponseEntity<>(guia, HttpStatus.OK);
     }
-    
 }

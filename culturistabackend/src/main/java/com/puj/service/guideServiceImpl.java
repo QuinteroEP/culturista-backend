@@ -1,25 +1,26 @@
 package com.puj.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.puj.entity.Destiny;
-import com.puj.repository.destinyRepository;
+import com.puj.entity.Guide;
+import com.puj.repository.guideRepository;
 
 @Service
-public class destinyServiceImpl implements destinyService {
+public class guideServiceImpl implements guideService{
     @Autowired
-    destinyRepository repo;
+    guideRepository repo;
 
     @Override
-    public Destiny findById(Long id) {
+    public Guide findById(Long id) {
         return repo.findById(id).get();
     }
 
     @Override
-    public List<Destiny> findAllDestinies() {
+    public List<Guide> findAllGuides() {
         return repo.findAll();
     }
     
