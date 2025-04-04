@@ -45,7 +45,7 @@ public class destiniesController {
         return new ResponseEntity<>(destino, HttpStatus.OK);
     }
 
-    //
+    //localhost:8090/destino/resultados/resultados/
     @GetMapping("/resultados/")
     @ResponseBody
     public ResponseEntity<List<Destiny>> getDestinyResults(

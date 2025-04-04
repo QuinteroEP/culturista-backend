@@ -28,11 +28,11 @@ public class Databaseinit implements ApplicationRunner{
     public void run(ApplicationArguments args) throws Exception {
 
         //Destinos
-        destinyRepository.save(new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", "Deportivo", "2021-10-10", 5000, 10));
+        destinyRepository.save(new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", "Deportivo", "2025-10-10", 5000, 10));
         
-        destinyRepository.save(new Destiny("Catedral de Sal", "Una mina de sal en Zipaquirá con una catedral adentro", "https://www.google.com", "Zipaquirá", "Turismo", "2021-10-10", 15000, 10));
+        destinyRepository.save(new Destiny("Catedral de Sal", "Una mina de sal en Zipaquirá con una catedral adentro", "https://www.google.com", "Zipaquirá", "Turismo", "2025-10-10", 15000, 10));
 
-        destinyRepository.save(new Destiny("Ciudad Amurallada", "Centro historico en Cartagena de Indias rodeado por un muro de piedra", "https://www.google.com", "Cartagena", "Cultural", "2021-10-10", 0, 10));
+        destinyRepository.save(new Destiny("Ciudad Amurallada", "Centro historico en Cartagena de Indias rodeado por un muro de piedra", "https://www.google.com", "Cartagena", "Cultural", "2025-10-10", 0, 10));
 
         //Guias
         guideRepository.save(new Guide("Andres","https://www.google.com",31020088L,"andres@puj.co"));
