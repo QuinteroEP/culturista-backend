@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class destiniesController {
     destinyService destinyService;
 
     //Todos los destinos
-    //localhost:8080/destino/all
+    //localhost:8090/destino/all
      @GetMapping("/all")
     @ResponseBody
     public ResponseEntity<List<Destiny>> getAllDestinies(Model model) {
@@ -35,13 +36,28 @@ public class destiniesController {
     }
 
     //Buscar un destino
-    //localhost:8080/destino/informacion/1
+    //localhost:8090/destino/informacion/1
     @GetMapping("/informacion/{id}")
     @ResponseBody
-    public ResponseEntity<Destiny> getGuia(Model model, @PathVariable("id") Long id) {
+    public ResponseEntity<Destiny> getDestiny(Model model, @PathVariable("id") Long id) {
         Destiny destino = destinyService.findById(id);
 
         return new ResponseEntity<>(destino, HttpStatus.OK);
+    }
+
+    //
+    @GetMapping("/resultados/")
+    @ResponseBody
+    public ResponseEntity<List<Destiny>> getDestinyResults(
+            Model model,
+            @RequestParam(name = "tipo") String tipo,
+            @RequestParam(name = "ubicacion") String ubicacion,
+            @RequestParam(name = "fecha") String fecha,
+            @RequestParam(name = "precio") int precio,
+            @RequestParam(name = "capacidad") int capacidad) {
+        List<Destiny> lista = destinyService.filterList(tipo, ubicacion, fecha, precio, capacidad);
+
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
     
 }

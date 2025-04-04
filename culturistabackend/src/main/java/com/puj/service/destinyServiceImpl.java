@@ -22,5 +22,10 @@ public class destinyServiceImpl implements destinyService {
     public List<Destiny> findAllDestinies() {
         return repo.findAll();
     }
+
+    @Override
+    public List<Destiny> filterList(String tipo, String ubicacion, String fecha, int precio, int capacidad) {
+        return repo.filterList(tipo, ubicacion, fecha, precio, capacidad);
+    }
     
 }

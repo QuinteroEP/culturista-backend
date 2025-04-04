@@ -13,32 +13,35 @@ public class Destiny {
     private String imagen;
     private String ubicacion;
     private String tipo;
-    private String fecha_inicio;
-    private String fecha_fin;
+    private String fecha;
+    private int precio;
+    private int capacidad;
 
     @Id
     @GeneratedValue
     private Long id;
 
-    public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha_inicio, String fecha_fin) {
+    public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha, int precio, int capacidad) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.ubicacion = ubicacion;
         this.tipo = tipo;
-        this.fecha_fin = fecha_fin;
-        this.fecha_inicio = fecha_inicio;
+        this.fecha = fecha;
+        this.precio = precio;
+        this.capacidad = capacidad;
     }
 
-    public Destiny(String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha_inicio, String fecha_fin) {
+    public Destiny(String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha, int precio, int capacidad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.ubicacion = ubicacion;
         this.tipo = tipo;
-        this.fecha_fin = fecha_fin;
-        this.fecha_inicio = fecha_inicio;
+        this.fecha = fecha;
+        this.precio = precio;
+        this.capacidad = capacidad;
     }
 
     public Destiny() {
@@ -85,20 +88,28 @@ public class Destiny {
         this.tipo = tipo;
     }
 
-    public String getFecha_inicio() {
-        return fecha_inicio;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setFecha_inicio(String fecha_inicio) {
-        this.fecha_inicio = fecha_inicio;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
-    public String getFecha_fin() {
-        return fecha_fin;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public void setFecha_fin(String fecha_fin) {
-        this.fecha_fin = fecha_fin;
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
+   
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
     }
 
     public Long getId() {
