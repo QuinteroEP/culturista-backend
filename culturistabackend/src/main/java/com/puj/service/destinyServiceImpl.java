@@ -1,5 +1,6 @@
 package com.puj.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class destinyServiceImpl implements destinyService {
     }
 
     @Override
-    public List<Destiny> filterList(String tipo, String ubicacion, String fecha, int precio, int capacidad) {
-        return repo.filterList(tipo, ubicacion, fecha, precio, capacidad);
+    public List<Destiny> filterList(List<String> tipo, String ubicacion, LocalDate fecha_inicio, LocalDate fecha_fin, long precio, int capacidad) {
+        return repo.filterList(tipo, ubicacion, fecha_inicio, fecha_fin, precio, capacidad);
     }
     
 }

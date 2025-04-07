@@ -1,8 +1,10 @@
 package com.puj.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -45,17 +47,19 @@ public class destiniesController {
         return new ResponseEntity<>(destino, HttpStatus.OK);
     }
 
-    //localhost:8090/destino/resultados/resultados/
+    //http://localhost:8090/destino/resultados/?tipo=Deportivo&tipo=Religioso&ubicacion=Bogot%C3%A1&inicio=2025-01-05&fin=2025-01-10&precio=10000&capacidad=2
     @GetMapping("/resultados/")
     @ResponseBody
     public ResponseEntity<List<Destiny>> getDestinyResults(
             Model model,
-            @RequestParam(name = "tipo") String tipo,
+            @RequestParam(name = "tipo") List<String> tipo,
             @RequestParam(name = "ubicacion") String ubicacion,
-            @RequestParam(name = "fecha") String fecha,
-            @RequestParam(name = "precio") int precio,
+            @RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin,
+            @RequestParam(name = "precio") long precio,
             @RequestParam(name = "capacidad") int capacidad) {
-        List<Destiny> lista = destinyService.filterList(tipo, ubicacion, fecha, precio, capacidad);
+
+        List<Destiny> lista = destinyService.filterList(tipo, ubicacion, inicio, fin, precio, capacidad);
 
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }

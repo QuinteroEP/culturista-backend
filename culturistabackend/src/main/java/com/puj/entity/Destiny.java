@@ -1,5 +1,7 @@
 package com.puj.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -13,15 +15,15 @@ public class Destiny {
     private String imagen;
     private String ubicacion;
     private String tipo;
-    private String fecha;
-    private int precio;
+    private LocalDate fecha;
+    private Long precio;
     private int capacidad;
 
     @Id
     @GeneratedValue
     private Long id;
 
-    public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha, int precio, int capacidad) {
+    public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, String tipo, LocalDate fecha, Long precio, int capacidad) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -33,7 +35,7 @@ public class Destiny {
         this.capacidad = capacidad;
     }
 
-    public Destiny(String nombre, String descripcion, String imagen, String ubicacion, String tipo, String fecha, int precio, int capacidad) {
+    public Destiny(String nombre, String descripcion, String imagen, String ubicacion, String tipo, LocalDate fecha, Long precio, int capacidad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -88,11 +90,11 @@ public class Destiny {
         this.tipo = tipo;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -104,11 +106,11 @@ public class Destiny {
         this.capacidad = capacidad;
     }
    
-    public int getPrecio() {
+    public Long getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(Long precio) {
         this.precio = precio;
     }
 
