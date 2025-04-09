@@ -38,6 +38,9 @@ public class Databaseinit implements ApplicationRunner{
         destinyRepository.save(new Destiny("Ciudad Amurallada", "Centro historico en Cartagena de Indias rodeado por un muro de piedra", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 1), 0L, 10));
         destinyRepository.save(new Destiny("Castillo de San Felipe de Barajas", "Fuerte Español ubicado en el cerro de San Lázaro", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 4), 0L, 10));
 
+        destinyRepository.save(new Destiny("La puerta falsa", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 1, 1), 50000L, 10));
+        destinyRepository.save(new Destiny("El Tramonti", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 12, 31), 50000L, 10));
+
         //Guias
         guideRepository.save(new Guide("Andres","https://www.google.com",31020088L,"andres@puj.co"));
         guideRepository.save(new Guide("Javier","https://www.google.com",34466708L,"javi@puj.co"));
