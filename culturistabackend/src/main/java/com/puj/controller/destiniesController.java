@@ -28,7 +28,7 @@ public class destiniesController {
 
     //Todos los destinos
     //localhost:8090/destino/all
-     @GetMapping("/all")
+    @GetMapping("/all")
     @ResponseBody
     public ResponseEntity<List<Destiny>> getAllDestinies(Model model) {
         List<Destiny> lista = destinyService.findAllDestinies();

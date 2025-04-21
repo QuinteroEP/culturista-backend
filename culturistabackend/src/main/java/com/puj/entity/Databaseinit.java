@@ -7,9 +7,12 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 
+import com.puj.entity.users.Organizer;
+import com.puj.entity.users.Traveler;
 import com.puj.repository.destinyRepository;
 import com.puj.repository.guideRepository;
 import com.puj.repository.organizerRepository;
+import com.puj.repository.travelerRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -25,6 +28,9 @@ public class Databaseinit implements ApplicationRunner{
 
     @Autowired
     organizerRepository organizerRepository;
+
+    @Autowired
+    travelerRepository travelerRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -46,7 +52,10 @@ public class Databaseinit implements ApplicationRunner{
         guideRepository.save(new Guide("Javier","https://www.google.com",34466708L,"javi@puj.co"));
 
         //Organizadores
-        organizerRepository.save(new Organizer("Pablo",310290000L,"pablo@kim.com"));
+        organizerRepository.save(new Organizer("Andres","Quiroga", 310290000L,1112113L, "andres@puj.com", "quiroga2024"));
+
+        //Usuarios
+        travelerRepository.save(new Traveler("Pablo","Quintero", "pquinter@javeriana.co", 310290000L,"moira24"));
     }
     
 }
