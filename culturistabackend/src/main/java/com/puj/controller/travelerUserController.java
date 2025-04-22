@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AuthenticationManager;
 
 import com.puj.entity.users.Traveler;
 import com.puj.service.travelerService;
@@ -39,9 +40,9 @@ public class travelerUserController {
     //localhost:8090/usuario/viajero/login
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<List<Traveler>> travelerLogin(Map<String, String> requestMap) {
+    public ResponseEntity travelerLogin(@ResponseBody Usuario usuario) {
         
-        ResponseEntity<List<Traveler>> response = new ResponseEntity<>(HttpStatus.OK);
-        return response;
+    
+        return new ResponseEntity("Usuario ha iniciade sesion.",HttpStatus.OK);
     }
 }
