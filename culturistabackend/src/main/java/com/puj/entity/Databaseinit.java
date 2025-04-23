@@ -1,10 +1,12 @@
 package com.puj.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import com.puj.entity.users.Organizer;
@@ -12,7 +14,9 @@ import com.puj.entity.users.Traveler;
 import com.puj.repository.destinyRepository;
 import com.puj.repository.guideRepository;
 import com.puj.repository.organizerRepository;
+import com.puj.repository.rolRepository;
 import com.puj.repository.travelerRepository;
+import com.puj.repository.userRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -32,9 +36,21 @@ public class Databaseinit implements ApplicationRunner{
     @Autowired
     travelerRepository travelerRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    rolRepository rolRepository;
+
+    @Autowired
+    userRepository userRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
+        rolRepository.save(new rol("VIAJERO"));
+        rolRepository.save(new rol("ORGANIZADOR"));
+ 
         //Destinos
         destinyRepository.save(new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", "Deportivo", LocalDate.of(2025, 1, 10), 5000L, 10));
         destinyRepository.save(new Destiny("Nuestra señora de Lourdes", "Una basilica de arquitectura barroca", "https://www.google.com", "Bogotá", "Religioso", LocalDate.of(2025, 1, 5), 5000L, 3));
@@ -51,11 +67,46 @@ public class Databaseinit implements ApplicationRunner{
         guideRepository.save(new Guide("Andres","https://www.google.com",31020088L,"andres@puj.co"));
         guideRepository.save(new Guide("Javier","https://www.google.com",34466708L,"javi@puj.co"));
 
-        //Organizadores
-        organizerRepository.save(new Organizer("Andres","Quiroga", 310290000L,1112113L, "andres@puj.com", "quiroga2024"));
+        
+        userEntity userEntity;
 
-        //Usuarios
-        travelerRepository.save(new Traveler("Pablo","Quintero", "pquinter@javeriana.co", 310290000L,"moira24"));
+        //Organizadores
+        Organizer newOrganizer;
+
+        newOrganizer = new Organizer("Andres","Quiroga", 310290000L,1112113L, "andres@puj.com",passwordEncoder.encode("quiroga24"));
+        userEntity = saveUserOrg(newOrganizer);
+        newOrganizer.setUser(userEntity);
+        organizerRepository.save(newOrganizer);
+
+        //Viajeros
+        Traveler newTraveler;
+
+        newTraveler = new Traveler("Pablo","Quintero", "pquinter@javeriana.co", 310290000L, passwordEncoder.encode("moira24"));
+        userEntity = saveUserTraveler(newTraveler);
+        newTraveler.setUser(userEntity);
+        travelerRepository.save(newTraveler);
+    }
+    
+    private userEntity saveUserTraveler(Traveler traveler){
+        userEntity user = new userEntity();
+
+        user.setUsername(traveler.getCorreo());
+        user.setPassword(traveler.getPassword());
+
+        rol rol = rolRepository.findByTipo("VIAJERO").get();
+        user.setRoles(List.of(rol));
+        return userRepository.save(user);
+    } 
+
+    private userEntity saveUserOrg(Organizer organizer){
+        userEntity user = new userEntity();
+
+        user.setUsername(organizer.getCorreo());
+        user.setPassword(organizer.getPassword());
+
+        rol rol = rolRepository.findByTipo("ORGANIZADOR").get();
+        user.setRoles(List.of(rol));
+        return userRepository.save(user);
     }
     
 }

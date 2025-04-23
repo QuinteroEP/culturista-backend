@@ -32,8 +32,8 @@ public class travelerServiceImpl implements travelerService {
 
     @Override
     @Transactional
-    public void add(Traveler usuario) {
-        repo.save(usuario);
+    public Traveler add(Traveler usuario) {
+        return repo.save(usuario);
     }
     
 }

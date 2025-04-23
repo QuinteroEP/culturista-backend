@@ -12,5 +12,5 @@ public interface travelerService {
     public List<Traveler> findAllTravelers();
 
     @Transactional
-    public void add(Traveler usuario);
+    public Traveler add(Traveler usuario);
 }

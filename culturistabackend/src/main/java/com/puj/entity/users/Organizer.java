@@ -1,9 +1,14 @@
 package com.puj.entity.users;
 
+import com.puj.entity.userEntity;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "ORGANIZADOR")
@@ -13,11 +18,16 @@ public class Organizer {
     private Long telefono;
     private Long cedula;
     private String correo;
+
+    @Transient
     private String password;
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private userEntity user;
 
     public Organizer() {}
 
@@ -95,5 +105,13 @@ public class Organizer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public userEntity getUser() {
+        return this.user;
+    }
+
+    public void setUser(userEntity user) {
+        this.user = user;
     }
 }
