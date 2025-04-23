@@ -57,6 +57,29 @@ public class Databaseinit implements ApplicationRunner{
         guideRepository.save(new Guide("Andres","https://www.google.com",31020088L,"andres@puj.co"));
         guideRepository.save(new Guide("Javier","https://www.google.com",34466708L,"javi@puj.co"));
 
+        //Reseñas y puntajes
+        List<Guide> guideList = guideRepository.findAll();
+        List<String> review = new ArrayList<>();
+        
+        Random rand = new Random();
+    
+        review.add("El guia fue muy amable y conocedor de la historia del lugar.");
+        review.add("La experiencia fue increíble, aprendí mucho sobre la cultura local.");
+        review.add("El guia no estaba preparado y no pudo responder a mis preguntas.");
+
+        for(int i = 0; i < guideList.size(); i++){
+            Guide guide = guideList.get(i);
+            guide.setComentarios(review);
+
+            Double totalScore = 0.0;
+            for(int j = 0; j < 3; j++){
+                totalScore = totalScore + rand.nextDouble() * (10.0 - 5.0) + 5.0;
+            }
+            totalScore = totalScore / 3.0;
+            totalScore = Math.round(totalScore * 10.0) / 10.0;
+            guide.setPuntaje(totalScore);
+        }
+
         userEntity userEntity;
 
         //Organizadores

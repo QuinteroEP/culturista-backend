@@ -1,6 +1,5 @@
 package com.puj.service;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,16 @@ public class guideServiceImpl implements guideService{
     @Override
     public List<Guide> findAllGuides() {
         return repo.findAll();
+    }
+
+    @Override
+    public Double getRating(Long id) {
+        return repo.getRating(id);
+    }
+
+    @Override
+    public List<String> getReviews(Long id) {
+        return repo.getReviews(id);
     }
     
 }

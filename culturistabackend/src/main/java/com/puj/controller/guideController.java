@@ -24,7 +24,7 @@ public class guideController {
     guideService guiaService;
 
     //Todos los guias
-    //localhost:8080/guias/all
+    //localhost:8090/guias/all
     @GetMapping("/all")
     @ResponseBody
     public ResponseEntity<List<Guide>> getAllGuides(Model model) {
@@ -35,12 +35,32 @@ public class guideController {
     }
 
     //Buscar un guia
-    //localhost:8080/guias/informacion/1
+    //localhost:8090/guias/informacion/1
     @GetMapping("/informacion/{id}")
     @ResponseBody
     public ResponseEntity<Guide> getGuia(Model model, @PathVariable("id") Long id) {
         Guide guia = guiaService.findById(id);
 
         return new ResponseEntity<>(guia, HttpStatus.OK);
+    }
+
+    //Obtener puntaje
+    //localhost:8090/guias/informacion/puntaje/1
+    @GetMapping("/informacion/puntaje/{id}")
+    @ResponseBody
+    public ResponseEntity<Double> getScore(Model model, @PathVariable("id") Long id) {
+        Double puntaje = guiaService.getRating(id);
+
+        return new ResponseEntity<>(puntaje, HttpStatus.OK);
+    }
+
+    //Obtener reseñas
+    //localhost:8090/guias/informacion/reseñas/1
+    @GetMapping("/informacion/reseñas/{id}")
+    @ResponseBody
+    public ResponseEntity<List<String>> getReviews(Model model, @PathVariable("id") Long id) {
+        List<String> reseñas = guiaService.getReviews(id);
+
+        return new ResponseEntity<>(reseñas, HttpStatus.OK);
     }
 }

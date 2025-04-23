@@ -1,5 +1,7 @@
 package com.puj.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,6 +14,8 @@ public class Guide {
     private String imagen;
     private Long telefono;
     private String correo;
+    private double puntaje;
+    private List<String> comentarios;
 
     @Id
     @GeneratedValue
@@ -74,5 +78,21 @@ public class Guide {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public double getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(double puntaje) {
+        this.puntaje = puntaje;
+    }
+
+    public List<String> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<String> comentarios) {
+        this.comentarios = comentarios;
     }
 }
