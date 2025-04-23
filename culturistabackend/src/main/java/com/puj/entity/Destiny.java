@@ -2,9 +2,12 @@ package com.puj.entity;
 
 import java.time.LocalDate;
 
+import com.puj.entity.users.Organizer;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +25,9 @@ public class Destiny {
     @Id
     @GeneratedValue
     private Long id;
+
+    @ManyToOne
+    private Organizer organizer;
 
     public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, String tipo, LocalDate fecha, Long precio, int capacidad) {
         this.id = id;
@@ -120,5 +126,13 @@ public class Destiny {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
     }
 }

@@ -63,5 +63,5 @@ public class destiniesController {
 
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
-    
+
 }

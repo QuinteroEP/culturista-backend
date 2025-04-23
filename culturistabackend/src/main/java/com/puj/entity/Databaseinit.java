@@ -1,7 +1,9 @@
 package com.puj.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -50,24 +52,11 @@ public class Databaseinit implements ApplicationRunner{
 
         rolRepository.save(new rol("VIAJERO"));
         rolRepository.save(new rol("ORGANIZADOR"));
- 
-        //Destinos
-        destinyRepository.save(new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", "Deportivo", LocalDate.of(2025, 1, 10), 5000L, 10));
-        destinyRepository.save(new Destiny("Nuestra señora de Lourdes", "Una basilica de arquitectura barroca", "https://www.google.com", "Bogotá", "Religioso", LocalDate.of(2025, 1, 5), 5000L, 3));
-        
-        destinyRepository.save(new Destiny("Catedral de Sal", "Una mina de sal en Zipaquirá con una catedral adentro", "https://www.google.com", "Zipaquirá", "Turismo", LocalDate.of(2025, 1, 7), 15000L, 10));
-
-        destinyRepository.save(new Destiny("Ciudad Amurallada", "Centro historico en Cartagena de Indias rodeado por un muro de piedra", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 1), 0L, 10));
-        destinyRepository.save(new Destiny("Castillo de San Felipe de Barajas", "Fuerte Español ubicado en el cerro de San Lázaro", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 4), 0L, 10));
-
-        destinyRepository.save(new Destiny("La puerta falsa", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 1, 1), 50000L, 10));
-        destinyRepository.save(new Destiny("El Tramonti", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 12, 31), 50000L, 10));
 
         //Guias
         guideRepository.save(new Guide("Andres","https://www.google.com",31020088L,"andres@puj.co"));
         guideRepository.save(new Guide("Javier","https://www.google.com",34466708L,"javi@puj.co"));
 
-        
         userEntity userEntity;
 
         //Organizadores
@@ -78,13 +67,53 @@ public class Databaseinit implements ApplicationRunner{
         newOrganizer.setUser(userEntity);
         organizerRepository.save(newOrganizer);
 
+        newOrganizer = new Organizer("Sebastian","Forero", 310253200L,1212663L, "forero@puj.com",passwordEncoder.encode("SForero"));
+        userEntity = saveUserOrg(newOrganizer);
+        newOrganizer.setUser(userEntity);
+        organizerRepository.save(newOrganizer);
+
         //Viajeros
         Traveler newTraveler;
 
-        newTraveler = new Traveler("Pablo","Quintero", "pquinter@javeriana.co", 310290000L, passwordEncoder.encode("moira24"));
+        newTraveler = new Traveler("Pablo","Quintero", "pquintero@javeriana.co", 310290000L, passwordEncoder.encode("moira24"));
         userEntity = saveUserTraveler(newTraveler);
         newTraveler.setUser(userEntity);
         travelerRepository.save(newTraveler);
+
+        //Destinos
+        Destiny newDestiny;
+
+        newDestiny = new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", "Deportivo", LocalDate.of(2025, 1, 10), 5000L, 10);
+        destinyRepository.save(newDestiny);
+
+        newDestiny = new Destiny("Nuestra señora de Lourdes", "Una basilica de arquitectura barroca", "https://www.google.com", "Bogotá", "Religioso", LocalDate.of(2025, 1, 5), 5000L, 3);
+        destinyRepository.save(newDestiny);
+
+        newDestiny = new Destiny("Catedral de Sal", "Una mina de sal en Zipaquirá con una catedral adentro", "https://www.google.com", "Zipaquirá", "Turismo", LocalDate.of(2025, 1, 7), 15000L, 10);
+        destinyRepository.save(newDestiny);
+
+        newDestiny = new Destiny("Ciudad Amurallada", "Centro historico en Cartagena de Indias rodeado por un muro de piedra", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 1), 0L, 10);
+        destinyRepository.save(newDestiny);
+
+        newDestiny = new Destiny("Castillo de San Felipe de Barajas", "Fuerte Español ubicado en el cerro de San Lázaro", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 4), 0L, 10);
+        destinyRepository.save(newDestiny);
+
+        newDestiny = new Destiny("La puerta falsa", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 1, 1), 50000L, 10);
+        destinyRepository.save(newDestiny);
+        
+        newDestiny = new Destiny("El Tramonti", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 12, 31), 50000L, 10);
+        destinyRepository.save(newDestiny);
+
+        //Asociar destinos con organizadores
+        List<Organizer> organizerList = organizerRepository.findAll();
+        List<Destiny> destinyList = destinyRepository.findAll();
+        
+        for(int i = 0; i < destinyList.size(); i++){
+            Organizer organizer = organizerList.get(i % organizerList.size());
+            Destiny destiny = destinyList.get(i);
+            destiny.setOrganizer(organizer);
+        }
+
     }
     
     private userEntity saveUserTraveler(Traveler traveler){

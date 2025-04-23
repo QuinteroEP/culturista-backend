@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.puj.security.customUserDetailsService;
-import com.puj.entity.Destiny;
 import com.puj.entity.userEntity;
 import com.puj.entity.users.Traveler;
 import com.puj.repository.userRepository;

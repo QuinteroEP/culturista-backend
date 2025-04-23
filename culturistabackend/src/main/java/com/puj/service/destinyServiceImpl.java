@@ -28,5 +28,10 @@ public class destinyServiceImpl implements destinyService {
     public List<Destiny> filterList(List<String> tipo, String ubicacion, LocalDate fecha_inicio, LocalDate fecha_fin, long precio, int capacidad) {
         return repo.filterList(tipo, ubicacion, fecha_inicio, fecha_fin, precio, capacidad);
     }
+
+    @Override
+    public List<Destiny> getOrganizerDestinies(Long id) {
+        return repo.getOrganizerDestinies(id);
+    }
     
 }

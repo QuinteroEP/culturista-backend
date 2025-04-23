@@ -1,11 +1,15 @@
 package com.puj.entity.users;
 
+import java.util.List;
+
+import com.puj.entity.Destiny;
 import com.puj.entity.userEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -28,6 +32,9 @@ public class Organizer {
 
     @OneToOne(cascade = CascadeType.ALL)
     private userEntity user;
+
+    @OneToMany
+    private List<Destiny> destiny;
 
     public Organizer() {}
 
@@ -113,5 +120,13 @@ public class Organizer {
 
     public void setUser(userEntity user) {
         this.user = user;
+    }
+
+    public List<Destiny> getDestiny() {
+        return this.destiny;
+    }
+
+    public void setDestiny(List<Destiny> destiny) {
+        this.destiny = destiny;
     }
 }

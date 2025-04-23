@@ -1,19 +1,26 @@
 package com.puj.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.puj.entity.Destiny;
 import com.puj.entity.userEntity;
 import com.puj.entity.users.Organizer;
 import com.puj.repository.userRepository;
 import com.puj.security.customUserDetailsService;
+import com.puj.service.destinyService;
 import com.puj.service.organizerService;
 
 @RestController
@@ -26,6 +33,9 @@ public class organizerUserController {
     
     @Autowired
     private organizerService organizerService;
+
+    @Autowired
+    private destinyService destinyService;
 
     @Autowired
     private customUserDetailsService customUserDetailsService;
@@ -49,5 +59,14 @@ public class organizerUserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
+    //Obtener destinos de un organizador
+    //localhost:8090/usuario/organizador/destinos/1
+    @GetMapping("/destinos/{id}")
+    @ResponseBody
+    public ResponseEntity<List<Destiny>> getDestinies(Model model, @PathVariable("id") Long id){
+        List<Destiny> destinies = destinyService.getOrganizerDestinies(id);
+
+        return new ResponseEntity<>(destinies, HttpStatus.OK);
+    }
 }
