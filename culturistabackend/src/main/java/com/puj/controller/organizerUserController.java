@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +23,7 @@ import com.puj.entity.Destiny;
 import com.puj.entity.userEntity;
 import com.puj.entity.users.Organizer;
 import com.puj.repository.userRepository;
+import com.puj.security.JWTGenerator;
 import com.puj.security.customUserDetailsService;
 import com.puj.service.destinyService;
 import com.puj.service.organizerService;
@@ -40,6 +45,12 @@ public class organizerUserController {
     @Autowired
     private customUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private AuthenticationManager AuthenticationManager;
+
+    @Autowired
+    private JWTGenerator jwtGenerator;
+
     //Crear cuenta
     //localhost:8090/usuario/organizador/signup/add
     @PostMapping("/signup/add")
@@ -58,6 +69,22 @@ public class organizerUserController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    //Iniciar sesion
+    //localhost:8090/usuario/organizador/login
+    @PostMapping("/login")
+    @ResponseBody
+    public ResponseEntity<String> organizerLogin(@RequestBody Organizer organizer) {
+        Authentication auth = AuthenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(organizer.getCedula(), organizer.getPassword())
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        String token = jwtGenerator.generateToken(auth);
+
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     //Obtener destinos de un organizador
