@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.puj.entity.Destiny;
 import com.puj.entity.userEntity;
 import com.puj.entity.users.Organizer;
+import com.puj.entity.users.Traveler;
 import com.puj.repository.userRepository;
 import com.puj.security.JWTGenerator;
 import com.puj.security.customUserDetailsService;
@@ -56,6 +57,7 @@ public class organizerUserController {
     @PostMapping("/signup/add")
     @ResponseBody
     public ResponseEntity<Organizer> organizerSignup(@RequestBody Organizer organizer) {
+        System.out.println("Received organizer: " + organizer);
         if(userRepository.existsByUsername(organizer.getCorreo())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -77,7 +79,7 @@ public class organizerUserController {
     @ResponseBody
     public ResponseEntity<String> organizerLogin(@RequestBody Organizer organizer) {
         Authentication auth = AuthenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(organizer.getCedula(), organizer.getPassword())
+            new UsernamePasswordAuthenticationToken(organizer.getCorreo(), organizer.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -95,5 +97,15 @@ public class organizerUserController {
         List<Destiny> destinies = destinyService.getOrganizerDestinies(id);
 
         return new ResponseEntity<>(destinies, HttpStatus.OK);
+    }
+
+    //Buscar un organizador por correo
+    //localhost:8090/usuario/organizador/informacion/correo/andres@puj.com
+    @GetMapping("informacion/correo/{email}")
+    @ResponseBody
+    public ResponseEntity<Organizer> getOrganizerEmail(Model model, @PathVariable("email") String email) {
+        Organizer organizer = organizerService.findByEmail(email);
+
+        return new ResponseEntity<>(organizer, HttpStatus.OK);
     }
 }
