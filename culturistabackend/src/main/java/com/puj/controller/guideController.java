@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +65,35 @@ public class guideController {
         List<String> reseñas = guiaService.getReviews(id);
 
         return new ResponseEntity<>(reseñas, HttpStatus.OK);
+    }
+
+    //Agregar
+    //localhost:8090/guias/add
+    @PostMapping("/add")
+    @ResponseBody
+    public ResponseEntity<Guide> addGuide(@RequestBody Guide guia) {
+        guia.setImagen("https://www.google.com");
+        guiaService.add(guia);
+        return new ResponseEntity<>(guia, HttpStatus.CREATED);
+    }
+
+     //Actualizar
+    //localhost:8090/guias/update/1
+    @PostMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity<Guide> updateGuide(@RequestBody Guide guia , @PathVariable("id") Long id) {
+        Guide oldInfo = guiaService.findById(id);
+
+        if (oldInfo == null) {
+            return new ResponseEntity<>(guia, HttpStatus.NOT_FOUND);
+        }
+
+        oldInfo.setNombre(guia.getNombre());
+        oldInfo.setCorreo(guia.getCorreo());
+        oldInfo.setTelefono(guia.getTelefono());
+
+        guiaService.update(oldInfo);
+        return new ResponseEntity<>(oldInfo, HttpStatus.OK);
     }
 
     //Eliminar

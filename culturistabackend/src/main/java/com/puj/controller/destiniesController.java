@@ -87,16 +87,25 @@ public class destiniesController {
 
     //Actualizar
     //localhost:8090/destino/update/1
-    @PutMapping("/update/{id}")
+    @PostMapping("/update/{id}")
     @ResponseBody
     public ResponseEntity<Destiny> updateDestiny(@RequestBody Destiny destino , @PathVariable("id") Long id) {
         Destiny oldInfo = destinyService.findById(id);
+
         if (oldInfo == null) {
             return new ResponseEntity<>(destino, HttpStatus.NOT_FOUND);
         }
 
-        destinyService.update(destino);
-        return new ResponseEntity<>(destino, HttpStatus.OK);
+        oldInfo.setNombre(destino.getNombre());
+        oldInfo.setDescripcion(destino.getDescripcion());
+        oldInfo.setCapacidad(destino.getCapacidad());
+        oldInfo.setFecha(destino.getFecha());
+        oldInfo.setPrecio(destino.getPrecio());
+        oldInfo.setUbicacion(destino.getUbicacion());
+        oldInfo.setTipo(destino.getTipo());
+
+        destinyService.update(oldInfo);
+        return new ResponseEntity<>(oldInfo, HttpStatus.OK);
     }
 
     //Eliminar

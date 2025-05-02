@@ -17,7 +17,7 @@ public interface destinyService {
     @Transactional
     public Destiny add(Destiny destiny);
     @Transactional
-    public Destiny update(Destiny destiny);
+    public void update(Destiny destiny);
     @Transactional
     public void delete(Long id);
 }

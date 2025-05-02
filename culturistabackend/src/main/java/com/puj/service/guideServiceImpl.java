@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.puj.entity.Destiny;
 import com.puj.entity.Guide;
 import com.puj.repository.guideRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class guideServiceImpl implements guideService{
@@ -34,17 +35,20 @@ public class guideServiceImpl implements guideService{
         return repo.getReviews(id);
     }
 
-     @Override
+    @Override
+    @Transactional
     public Guide add(Guide guide) {
         return repo.save(guide);
     }
 
     @Override
+    @Transactional
     public Guide update(Guide guide) {
         return repo.save(guide);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repo.deleteById(id);
     }

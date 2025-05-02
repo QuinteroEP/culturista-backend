@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.puj.entity.Destiny;
 import com.puj.repository.destinyRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class destinyServiceImpl implements destinyService {
     @Autowired
@@ -35,16 +37,19 @@ public class destinyServiceImpl implements destinyService {
     }
 
     @Override
+    @Transactional
     public Destiny add(Destiny destiny) {
         return repo.save(destiny);
     }
 
     @Override
-    public Destiny update(Destiny destiny) {
-        return repo.save(destiny);
+    @Transactional
+    public void update(Destiny destiny) {
+        repo.save(destiny);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repo.deleteById(id);
     }
