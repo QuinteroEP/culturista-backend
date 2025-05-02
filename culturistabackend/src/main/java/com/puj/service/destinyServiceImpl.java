@@ -33,5 +33,20 @@ public class destinyServiceImpl implements destinyService {
     public List<Destiny> getOrganizerDestinies(Long id) {
         return repo.getOrganizerDestinies(id);
     }
+
+    @Override
+    public Destiny add(Destiny destiny) {
+        return repo.save(destiny);
+    }
+
+    @Override
+    public Destiny update(Destiny destiny) {
+        return repo.save(destiny);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
     
 }

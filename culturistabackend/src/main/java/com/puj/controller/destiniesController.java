@@ -9,15 +9,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.puj.entity.Destiny;
+import com.puj.entity.users.Organizer;
 import com.puj.service.destinyService;
+import com.puj.service.organizerService;
 
 @RestController
 @RequestMapping("/destino")
@@ -25,6 +31,9 @@ import com.puj.service.destinyService;
 public class destiniesController {
     @Autowired
     destinyService destinyService;
+
+    @Autowired
+    organizerService organizerService;
 
     //Todos los destinos
     //localhost:8090/destino/all
@@ -64,4 +73,38 @@ public class destiniesController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
+    //Agregar
+    //localhost:8090/destino/add/{id}
+    @PostMapping("/add/{id}")
+    @ResponseBody
+    public ResponseEntity<Destiny> addDestiny(@RequestBody Destiny destino , @PathVariable("id") Long id) {
+        Organizer org = organizerService.findById(id);
+        
+        destino.setOrganizer(org);
+        destinyService.add(destino);
+        return new ResponseEntity<>(destino, HttpStatus.CREATED);
+    }
+
+    //Actualizar
+    //localhost:8090/destino/update/1
+    @PutMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity<Destiny> updateDestiny(@RequestBody Destiny destino , @PathVariable("id") Long id) {
+        Destiny oldInfo = destinyService.findById(id);
+        if (oldInfo == null) {
+            return new ResponseEntity<>(destino, HttpStatus.NOT_FOUND);
+        }
+
+        destinyService.update(destino);
+        return new ResponseEntity<>(destino, HttpStatus.OK);
+    }
+
+    //Eliminar
+    //localhost:8090/destino/delete/1
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteDestiny(@PathVariable("id") Long id) {
+        destinyService.delete(id);
+        return new ResponseEntity<String>("Destino con id " + id + " eliminado", HttpStatus.OK);
+    }
 }

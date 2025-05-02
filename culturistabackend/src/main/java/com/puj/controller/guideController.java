@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,5 +63,14 @@ public class guideController {
         List<String> reseñas = guiaService.getReviews(id);
 
         return new ResponseEntity<>(reseñas, HttpStatus.OK);
+    }
+
+    //Eliminar
+    //localhost:8090/guias/delete/1
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteDestiny(@PathVariable("id") Long id) {
+        guiaService.delete(id);
+        return new ResponseEntity<String>("Guia con id " + id + " eliminado", HttpStatus.OK);
     }
 }
