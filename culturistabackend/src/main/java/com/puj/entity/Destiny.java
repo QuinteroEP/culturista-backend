@@ -1,6 +1,7 @@
 package com.puj.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.puj.entity.users.Organizer;
 
@@ -17,10 +18,10 @@ public class Destiny {
     private String descripcion;
     private String imagen;
     private String ubicacion;
-    private String tipo;
     private LocalDate fecha;
     private Long precio;
     private int capacidad;
+    private List<String> recomendaciones;
 
     @Id
     @GeneratedValue
@@ -29,7 +30,10 @@ public class Destiny {
     @ManyToOne
     private Organizer organizer;
 
-    public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, String tipo, LocalDate fecha, Long precio, int capacidad) {
+    @ManyToOne
+    private Activity tipo;
+
+    public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, Activity tipo, LocalDate fecha, Long precio, int capacidad, List<String> recomendaciones) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -39,9 +43,10 @@ public class Destiny {
         this.fecha = fecha;
         this.precio = precio;
         this.capacidad = capacidad;
+        this.recomendaciones = recomendaciones;
     }
 
-    public Destiny(String nombre, String descripcion, String imagen, String ubicacion, String tipo, LocalDate fecha, Long precio, int capacidad) {
+    public Destiny(String nombre, String descripcion, String imagen, String ubicacion, Activity tipo, LocalDate fecha, Long precio, int capacidad, List<String> recomendaciones) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -50,6 +55,7 @@ public class Destiny {
         this.fecha = fecha;
         this.precio = precio;
         this.capacidad = capacidad;
+        this.recomendaciones = recomendaciones;
     }
 
     public Destiny() {
@@ -88,11 +94,11 @@ public class Destiny {
         this.ubicacion = ubicacion;
     }
 
-    public String getTipo() {
+    public Activity getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(Activity tipo) {
         this.tipo = tipo;
     }
 
@@ -135,4 +141,13 @@ public class Destiny {
     public void setOrganizer(Organizer organizer) {
         this.organizer = organizer;
     }
+
+    public List<String> getRecomendaciones() {
+        return this.recomendaciones;
+    }
+
+    public void setRecomendaciones(List<String> recomendaciones) {
+        this.recomendaciones = recomendaciones;
+    }
+
 }

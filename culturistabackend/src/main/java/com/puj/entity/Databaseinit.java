@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.puj.entity.users.Organizer;
 import com.puj.entity.users.Traveler;
+import com.puj.repository.activityRepository;
 import com.puj.repository.destinyRepository;
 import com.puj.repository.guideRepository;
 import com.puj.repository.organizerRepository;
@@ -47,6 +48,10 @@ public class Databaseinit implements ApplicationRunner{
     @Autowired
     userRepository userRepository;
 
+    @Autowired
+    activityRepository activityRepository;
+
+    @SuppressWarnings("deprecation")
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
@@ -54,8 +59,8 @@ public class Databaseinit implements ApplicationRunner{
         rolRepository.save(new rol("ORGANIZADOR"));
 
         //Guias
-        guideRepository.save(new Guide("Andres","https://www.google.com",31020088L,"andres@puj.co"));
-        guideRepository.save(new Guide("Javier","https://www.google.com",34466708L,"javi@puj.co"));
+        guideRepository.save(new Guide("Andres","https://www.google.com",31020088L,"andres@puj.co", null));
+        guideRepository.save(new Guide("Javier","https://www.google.com",34466708L,"javi@puj.co", null));
 
         //Reseñas y puntajes
         List<Guide> guideList = guideRepository.findAll();
@@ -103,28 +108,77 @@ public class Databaseinit implements ApplicationRunner{
         newTraveler.setUser(userEntity);
         travelerRepository.save(newTraveler);
 
+        //Tipos de actividad
+        activityRepository.save(new Activity("Cultural"));
+        activityRepository.save(new Activity("Religioso"));
+        activityRepository.save(new Activity("Deportivo"));
+        activityRepository.save(new Activity("Gastronómica"));
+        activityRepository.save(new Activity("Turismo"));
+
         //Destinos
         Destiny newDestiny;
+        List<String> recom;
+        Guide guide;
 
-        newDestiny = new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", "Deportivo", LocalDate.of(2025, 1, 10), 5000L, 10);
+        newDestiny = new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", null, LocalDate.of(2025, 1, 10), 5000L, 10, null);
+        newDestiny.setTipo(activityRepository.getById(2L));
+
+        recom = new ArrayList<>();
+        recom.add("Llevar ropa calida");
+        recom.add("Llevar zapatos para caminar");
+        recom.add("Llevar hidratacion");
+        newDestiny.setRecomendaciones(recom);
+
+        destinyRepository.save(newDestiny);
+        guide = guideList.get(0);
+        guide.setGuia_de(newDestiny);
+
+        newDestiny = new Destiny("Nuestra señora de Lourdes", "Una basilica de arquitectura barroca", "https://www.google.com", "Bogotá", null, LocalDate.of(2025, 1, 5), 5000L, 3, null);
+        newDestiny.setTipo(activityRepository.getById(2L));
+
         destinyRepository.save(newDestiny);
 
-        newDestiny = new Destiny("Nuestra señora de Lourdes", "Una basilica de arquitectura barroca", "https://www.google.com", "Bogotá", "Religioso", LocalDate.of(2025, 1, 5), 5000L, 3);
+        newDestiny = new Destiny("Catedral de Sal", "Una mina de sal en Zipaquirá con una catedral adentro", "https://www.google.com", "Zipaquirá", null, LocalDate.of(2025, 1, 7), 15000L, 10, null);
+        newDestiny.setTipo(activityRepository.getById(5L));
+
+        recom = new ArrayList<>();
+        recom.add("Llevar ropa comoda");
+        recom.add("Tener dinero en efectivo");
+        newDestiny.setRecomendaciones(recom);
+        
         destinyRepository.save(newDestiny);
 
-        newDestiny = new Destiny("Catedral de Sal", "Una mina de sal en Zipaquirá con una catedral adentro", "https://www.google.com", "Zipaquirá", "Turismo", LocalDate.of(2025, 1, 7), 15000L, 10);
+        newDestiny = new Destiny("Ciudad Amurallada", "Centro historico en Cartagena de Indias rodeado por un muro de piedra", "https://www.google.com", "Cartagena", null, LocalDate.of(2025, 1, 1), 0L, 10, null);
+        newDestiny.setTipo(activityRepository.getById(1L));
+
+        recom = new ArrayList<>();
+        recom.add("Traer proteccion contra el sol");
+        recom.add("Tener dinero en efectivo");
+        newDestiny.setRecomendaciones(recom);
+        
         destinyRepository.save(newDestiny);
 
-        newDestiny = new Destiny("Ciudad Amurallada", "Centro historico en Cartagena de Indias rodeado por un muro de piedra", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 1), 0L, 10);
-        destinyRepository.save(newDestiny);
+        newDestiny = new Destiny("Castillo de San Felipe de Barajas", "Fuerte Español ubicado en el cerro de San Lázaro", "https://www.google.com", "Cartagena", null, LocalDate.of(2025, 1, 4), 0L, 10, null);
+        newDestiny.setTipo(activityRepository.getById(1L));
 
-        newDestiny = new Destiny("Castillo de San Felipe de Barajas", "Fuerte Español ubicado en el cerro de San Lázaro", "https://www.google.com", "Cartagena", "Cultural", LocalDate.of(2025, 1, 4), 0L, 10);
+        recom = new ArrayList<>();
+        recom.add("Traer proteccion contra el sol");
+        recom.add("Llevar zapatos comodos");
+        recom.add("Llevar hidratacion");
+        newDestiny.setRecomendaciones(recom);
+        
         destinyRepository.save(newDestiny);
+        guide = guideList.get(1);
+        guide.setGuia_de(newDestiny);
 
-        newDestiny = new Destiny("La puerta falsa", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 1, 1), 50000L, 10);
+        newDestiny = new Destiny("La puerta falsa", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", null, LocalDate.of(2025, 1, 1), 50000L, 10, null);
+        newDestiny.setTipo(activityRepository.getById(4L));
+        
         destinyRepository.save(newDestiny);
         
-        newDestiny = new Destiny("El Tramonti", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", "Gastronómica", LocalDate.of(2025, 12, 31), 50000L, 10);
+        newDestiny = new Destiny("El Tramonti", "Restaurante clasico de comida local", "https://www.google.com", "Bogotá", null, LocalDate.of(2025, 12, 31), 50000L, 10, null);
+        newDestiny.setTipo(activityRepository.getById(4L));
+        
         destinyRepository.save(newDestiny);
 
         //Asociar destinos con organizadores
@@ -136,7 +190,6 @@ public class Databaseinit implements ApplicationRunner{
             Destiny destiny = destinyList.get(i);
             destiny.setOrganizer(organizer);
         }
-
     }
     
     private userEntity saveUserTraveler(Traveler traveler){

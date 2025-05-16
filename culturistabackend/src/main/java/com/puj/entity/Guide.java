@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,19 +22,24 @@ public class Guide {
     @GeneratedValue
     private Long id;
 
-    public Guide(Long id ,String nombre, String imagen, Long telefono, String correo) {
+    @ManyToOne
+    private Destiny guia_de;
+
+    public Guide(Long id ,String nombre, String imagen, Long telefono, String correo, Destiny guia_de) {
         this.id = id;
         this.nombre = nombre;
         this.imagen = imagen;
         this.telefono = telefono;
         this.correo = correo;
+        this.guia_de = guia_de;
     }
 
-    public Guide(String nombre, String imagen, Long telefono, String correo) {
+    public Guide(String nombre, String imagen, Long telefono, String correo, Destiny guia_de) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.telefono = telefono;
         this.correo = correo;
+        this.guia_de = guia_de;
     }
 
     public Guide() {
@@ -95,4 +101,13 @@ public class Guide {
     public void setComentarios(List<String> comentarios) {
         this.comentarios = comentarios;
     }
+
+    public Destiny getGuia_de() {
+        return this.guia_de;
+    }
+
+    public void setGuia_de(Destiny guia_de) {
+        this.guia_de = guia_de;
+    }
+
 }
