@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.puj.entity.Activity;
 import com.puj.entity.Destiny;
 import com.puj.entity.users.Organizer;
 import com.puj.service.destinyService;
 import com.puj.service.organizerService;
+import com.puj.service.activityService;;
 
 @RestController
 @RequestMapping("/destino")
@@ -34,6 +36,9 @@ public class destiniesController {
 
     @Autowired
     organizerService organizerService;
+
+    @Autowired
+    activityService activityService;
 
     //Todos los destinos
     //localhost:8090/destino/all
@@ -56,12 +61,12 @@ public class destiniesController {
         return new ResponseEntity<>(destino, HttpStatus.OK);
     }
 
-    //http://localhost:8090/destino/resultados/?tipo=Deportivo&tipo=Religioso&ubicacion=Bogot%C3%A1&inicio=2025-01-05&fin=2025-01-10&precio=10000&capacidad=2
+    //http://localhost:8090/destino/resultados/?tipo=1&tipo=2&ubicacion=Bogotá&inicio=2025-01-05&fin=2025-01-10&precio=10000&capacidad=2
     @GetMapping("/resultados/")
     @ResponseBody
     public ResponseEntity<List<Destiny>> getDestinyResults(
             Model model,
-            @RequestParam(name = "tipo") List<String> tipo,
+            @RequestParam(name = "tipo") List<Long> tipo,
             @RequestParam(name = "ubicacion") String ubicacion,
             @RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
             @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin,
@@ -115,5 +120,15 @@ public class destiniesController {
     public ResponseEntity<String> deleteDestiny(@PathVariable("id") Long id) {
         destinyService.delete(id);
         return new ResponseEntity<String>("Destino con id " + id + " eliminado", HttpStatus.OK);
+    }
+
+    //Obtener todos los tipos de actividades
+    //localhost:8090/destino/actividades
+    @GetMapping("/actividades")
+    @ResponseBody
+    public ResponseEntity<List<Activity>> getActivityTypes(Model model) {
+        List<Activity> activity = activityService.findAll();
+
+        return new ResponseEntity<>(activity, HttpStatus.OK);
     }
 }

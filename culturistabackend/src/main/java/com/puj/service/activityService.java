@@ -1,10 +1,14 @@
 package com.puj.service;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.puj.entity.Activity;
 
-public interface activitService {
+public interface activityService {
+    public List<Activity> findAll();
+    
     @Transactional
     public Activity add(Activity activity);
     @Transactional

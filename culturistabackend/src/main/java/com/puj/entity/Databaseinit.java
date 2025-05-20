@@ -113,7 +113,10 @@ public class Databaseinit implements ApplicationRunner{
         activityRepository.save(new Activity("Religioso"));
         activityRepository.save(new Activity("Deportivo"));
         activityRepository.save(new Activity("Gastronómica"));
+        activityRepository.save(new Activity("Relajante"));
+        activityRepository.save(new Activity("Aventura"));
         activityRepository.save(new Activity("Turismo"));
+        activityRepository.save(new Activity("Otros"));
 
         //Destinos
         Destiny newDestiny;
@@ -121,7 +124,7 @@ public class Databaseinit implements ApplicationRunner{
         Guide guide;
 
         newDestiny = new Destiny("Cerro de Monserrate", "Una capilla en la cima de un cerro de Bogotá", "https://www.google.com", "Bogotá", null, LocalDate.of(2025, 1, 10), 5000L, 10, null);
-        newDestiny.setTipo(activityRepository.getById(2L));
+        newDestiny.setTipo(activityRepository.getById(3L));
 
         recom = new ArrayList<>();
         recom.add("Llevar ropa calida");

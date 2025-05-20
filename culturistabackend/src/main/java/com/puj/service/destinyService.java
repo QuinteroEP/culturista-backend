@@ -11,7 +11,7 @@ public interface destinyService {
 
     public Destiny findById(Long id);
     public List<Destiny> findAllDestinies();
-    public List<Destiny> filterList(List<String> tipo, String ubicacion, LocalDate fecha_inicio, LocalDate fecha_fin, long precio, int capacidad);
+    public List<Destiny> filterList(List<Long> tipo, String ubicacion, LocalDate fecha_inicio, LocalDate fecha_fin, long precio, int capacidad);
     public List<Destiny> getOrganizerDestinies(Long id);
 
     @Transactional

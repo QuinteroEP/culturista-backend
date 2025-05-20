@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.puj.entity.Activity;
 import com.puj.entity.Destiny;
 import com.puj.repository.destinyRepository;
+import com.puj.repository.activityRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -15,6 +17,9 @@ import jakarta.transaction.Transactional;
 public class destinyServiceImpl implements destinyService {
     @Autowired
     destinyRepository repo;
+
+    @Autowired
+    private activityRepository activityRepo;
 
     @Override
     public Destiny findById(Long id) {
@@ -27,8 +32,9 @@ public class destinyServiceImpl implements destinyService {
     }
 
     @Override
-    public List<Destiny> filterList(List<String> tipo, String ubicacion, LocalDate fecha_inicio, LocalDate fecha_fin, long precio, int capacidad) {
-        return repo.filterList(tipo, ubicacion, fecha_inicio, fecha_fin, precio, capacidad);
+    public List<Destiny> filterList(List<Long> tipoIds, String ubicacion, LocalDate fecha_inicio, LocalDate fecha_fin, long precio, int capacidad) {
+    List<Activity> actividades = activityRepo.findAllById(tipoIds);
+    return repo.filterList(actividades, ubicacion, fecha_inicio, fecha_fin, precio, capacidad);
     }
 
     @Override
