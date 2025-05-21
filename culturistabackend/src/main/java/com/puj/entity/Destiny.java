@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.puj.entity.users.Organizer;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ public class Destiny {
     @ManyToOne
     private Organizer organizer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Activity tipo;
 
     public Destiny(Long id ,String nombre, String descripcion, String imagen, String ubicacion, Activity tipo, LocalDate fecha, Long precio, int capacidad, List<String> recomendaciones) {
